@@ -1,7 +1,11 @@
 import React from 'react';
 
+import useStyles from './MovieInformation.styles';
+
 const MovieInformation = () => {
-  return <div>MovieInformation</div>;
+  const classes = useStyles();
+
+  return <div className={classes.container}>MovieInformation</div>;
 };
 
 export default MovieInformation;
