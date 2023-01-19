@@ -4,19 +4,19 @@ import {
   List,
   ListItemText,
   ListSubheader,
-  // Listitem,
-  // ListItemicon,
-  // Box,
-  // CircularProgress,
+  Box,
+  CircularProgress,
   Theme,
   ListItem,
+  ListItemIcon,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/styles';
 
-import { SidebarProps } from './Sidebar.props';
+import { SidebarProps, GenresProps } from './Sidebar.props';
 import useStyles from './Sidebar.styles';
-import { blue } from '@mui/material/colors';
+import { useGetGenresQuery } from '../../services/TMDB';
+import genreIcons from '../../assets/genres';
 
 // Demo data
 const categories = [
@@ -24,12 +24,7 @@ const categories = [
   { label: 'Top Rated', value: 'top_rated' },
   { label: 'Upcoming', value: 'upcoming' },
 ];
-const genres = [
-  { label: 'Comedy', value: 'comedy' },
-  { label: 'Action', value: 'action' },
-  { label: 'Horror', value: 'horror' },
-  { label: 'Animation', value: 'animation' },
-];
+
 const blueLogo =
   'https://fontmeme.com/permalink/210930/8531c658a743debe1e1aa1a2fc82006e.png';
 const redLogo =
@@ -38,6 +33,18 @@ const redLogo =
 const Sidebar = ({ setMobileOpen }: SidebarProps) => {
   const classes = useStyles();
   const theme = useTheme<Theme>();
+  const { data, isFetching } = useGetGenresQuery();
+
+  console.log('Data', data);
+
+  // IF FETCHING MOVIES
+  if (isFetching) {
+    return (
+      <Box display="flex" justifyContent="center">
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -54,6 +61,16 @@ const Sidebar = ({ setMobileOpen }: SidebarProps) => {
         {categories.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
             <ListItem onClick={() => {}} button>
+              <ListItemIcon>
+                <img
+                  alt={label}
+                  src={
+                    genreIcons[label.toLowerCase() as keyof typeof genreIcons]
+                  }
+                  className={classes.genreImage}
+                  height={30}
+                />
+              </ListItemIcon>
               <ListItemText primary={label} />
             </ListItem>
           </Link>
@@ -62,10 +79,20 @@ const Sidebar = ({ setMobileOpen }: SidebarProps) => {
       <Divider />
       <List>
         <ListSubheader>Genres</ListSubheader>
-        {genres.map(({ label, value }) => (
-          <Link key={value} className={classes.links} to="/">
+        {data.genres.map(({ name, id }: GenresProps) => (
+          <Link key={id} className={classes.links} to="/">
             <ListItem onClick={() => {}} button>
-              <ListItemText primary={label} />
+              <ListItemIcon>
+                <img
+                  alt={name}
+                  src={
+                    genreIcons[name.toLowerCase() as keyof typeof genreIcons]
+                  }
+                  className={classes.genreImage}
+                  height={30}
+                />
+              </ListItemIcon>
+              <ListItemText primary={name} />
             </ListItem>
           </Link>
         ))}
