@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import useStyles from './Movies.styles';
 import { useGetMoviesQuery } from '../../services/TMDB';
 import MovieList from '../MovieList/MovieList';
+import { RootState } from '../../app/store';
 
 const Movies = () => {
   const classes = useStyles();
   const [page, setPage] = useState(1);
-  const { data, isFetching, error } = useGetMoviesQuery(page);
+  const { genreIdOrCategoryName, searchQuery } = useSelector(
+    (state: RootState) => state.currentGenreOrCategory
+  );
+  const { data, isFetching, error } = useGetMoviesQuery({
+    genreIdOrCategoryName,
+    page,
+    searchQuery,
+  });
 
   // IF FETCHING MOVIES
   if (isFetching) {

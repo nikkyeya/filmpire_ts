@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Divider,
   List,
@@ -12,13 +12,16 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/styles';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { SidebarProps, GenresProps } from './Sidebar.props';
 import useStyles from './Sidebar.styles';
 import { useGetGenresQuery } from '../../services/TMDB';
 import genreIcons from '../../assets/genres';
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
+import { RootState } from '../../app/store';
 
-// Demo data
+// MOVIE CATEGORIES
 const categories = [
   { label: 'Popular', value: 'popular' },
   { label: 'Top Rated', value: 'top_rated' },
@@ -33,9 +36,12 @@ const redLogo =
 const Sidebar = ({ setMobileOpen }: SidebarProps) => {
   const classes = useStyles();
   const theme = useTheme<Theme>();
+  const [page, setPage] = useState(1);
   const { data, isFetching } = useGetGenresQuery();
-
-  console.log('Data', data);
+  const dispatch = useDispatch();
+  const { genreIdOrCategoryName } = useSelector(
+    (state: RootState) => state.currentGenreOrCategory
+  );
 
   // IF FETCHING MOVIES
   if (isFetching) {
@@ -60,7 +66,10 @@ const Sidebar = ({ setMobileOpen }: SidebarProps) => {
         <ListSubheader>Categories</ListSubheader>
         {categories.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
-            <ListItem onClick={() => {}} button>
+            <ListItem
+              onClick={() => dispatch(selectGenreOrCategory(value))}
+              button
+            >
               <ListItemIcon>
                 <img
                   alt={label}
@@ -81,7 +90,10 @@ const Sidebar = ({ setMobileOpen }: SidebarProps) => {
         <ListSubheader>Genres</ListSubheader>
         {data.genres.map(({ name, id }: GenresProps) => (
           <Link key={id} className={classes.links} to="/">
-            <ListItem onClick={() => {}} button>
+            <ListItem
+              onClick={() => dispatch(selectGenreOrCategory(id))}
+              button
+            >
               <ListItemIcon>
                 <img
                   alt={name}
