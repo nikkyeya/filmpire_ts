@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import useStyles from './Movies.styles';
 import { useGetMoviesQuery } from '../../services/TMDB';
 import MovieList from '../MovieList/MovieList';
+import Pagination from '../Pagination/Pagination';
 import { RootState } from '../../app/store';
 
 const Movies = () => {
   const classes = useStyles();
   const [page, setPage] = useState(1);
+  const isLarge = useMediaQuery((theme: Theme) => theme.breakpoints.only('lg'));
+  const numberOfMovies = isLarge ? 16 : 18;
   const { genreIdOrCategoryName, searchQuery } = useSelector(
     (state: RootState) => state.currentGenreOrCategory
   );
@@ -43,7 +52,16 @@ const Movies = () => {
   if (error) return <Typography>An error has occured.</Typography>;
 
   // RENDER MOVIE LIST
-  return <MovieList movies={data} />;
+  return (
+    <div>
+      <MovieList movies={data} numberOfMovies={numberOfMovies} />
+      <Pagination
+        currentPage={page}
+        setPage={setPage}
+        totalPages={data.total_pages}
+      />
+    </div>
+  );
 };
 
 export default Movies;
