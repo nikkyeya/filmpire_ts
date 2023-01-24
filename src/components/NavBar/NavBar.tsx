@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -23,16 +23,20 @@ import Search from '../Search/Search';
 import useStyles from './NavBar.styles';
 import { fetchToken, movieApi, createSessionId } from '../../utils';
 import { setUser, userSelector } from '../../features/auth';
+import { ColorModeContext } from '../../utils/ToggleColorMode';
 
 const NavBar = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const isMobile = useMediaQuery('(max-width:600px)');
   const dispatch = useDispatch();
-  const { user, isAuthenticated } = useSelector(userSelector);
+  const isMobile = useMediaQuery('(max-width:600px)');
+  const { toggleColorMode, mode }: any = useContext(ColorModeContext);
+
   const tokenFromLocalStorage = localStorage.getItem('request_token');
   const sessionIdFromLocalStorage = localStorage.getItem('session_id');
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { user, isAuthenticated } = useSelector(userSelector);
 
   useEffect(() => {
     const loginUser = async () => {
@@ -78,7 +82,7 @@ const NavBar = () => {
             color="inherit"
             edge="start"
             style={{ outline: 'none' }}
-            onClick={() => {}}
+            onClick={toggleColorMode}
             className={classes.menuButton}
           >
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
