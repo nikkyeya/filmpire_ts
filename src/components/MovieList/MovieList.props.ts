@@ -2,9 +2,10 @@ import { MovieItemProps } from '../Movie/Movie.props';
 
 export interface MovieListProps {
   movies: {
-    page: 1;
+    page: number;
     results: MovieItemProps[];
-    total_pages: 36737;
-    total_results: 734733;
+    total_pages: number;
+    total_results: number;
   };
+  numberOfMovies: number;
 }
