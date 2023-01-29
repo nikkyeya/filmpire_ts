@@ -30,7 +30,7 @@ const NavBar = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const isMobile = useMediaQuery('(max-width:600px)');
-  const { toggleColorMode, mode }: any = useContext(ColorModeContext);
+  const { toggleColorMode }: any = useContext(ColorModeContext);
 
   const tokenFromLocalStorage = localStorage.getItem('request_token');
   const sessionIdFromLocalStorage = localStorage.getItem('session_id');
