@@ -39,6 +39,7 @@ import genreIcons from '../../assets/genres';
 import MovieList from '../MovieList/MovieList';
 import { userSelector } from '../../features/auth';
 import { useGetListQuery } from '../../services/TMDB';
+import { FeaturedItemProps } from '../FeaturedMovie/FeaturedMovie.props';
 
 const MovieInformation = () => {
   const classes = useStyles();
@@ -69,14 +70,19 @@ const MovieInformation = () => {
 
   useEffect(() => {
     setIsMovieFavorited(
-      !!favoriteMovies?.results?.find((item) => item?.id === movie?.id)
+      !!favoriteMovies?.results?.find(
+        (item: FeaturedItemProps) => item?.id === movie?.id
+      )
     );
   }, [favoriteMovies, movie]);
   useEffect(() => {
     setIsMovieWatchlisted(
-      !!watchlistMovies?.results?.find((item) => item?.id === movie?.id)
+      !!watchlistMovies?.results?.find(
+        (item: FeaturedItemProps) => item?.id === movie?.id
+      )
     );
   }, [watchlistMovies, movie]);
+
 
   const addToFavorites = async () => {
     await axios.post(

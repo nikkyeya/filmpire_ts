@@ -13,6 +13,7 @@ import { useGetMoviesQuery } from '../../services/TMDB';
 import MovieList from '../MovieList/MovieList';
 import Pagination from '../Pagination/Pagination';
 import { RootState } from '../../app/store';
+import FeaturedMovie from '../FeaturedMovie/FeaturedMovie';
 
 const Movies = () => {
   const classes = useStyles();
@@ -54,7 +55,8 @@ const Movies = () => {
   // RENDER MOVIE LIST
   return (
     <div>
-      <MovieList movies={data} numberOfMovies={numberOfMovies} />
+      <FeaturedMovie movie={data.results[0]} />
+      <MovieList movies={data} numberOfMovies={numberOfMovies} excludeFirst />
       <Pagination
         currentPage={page}
         setPage={setPage}

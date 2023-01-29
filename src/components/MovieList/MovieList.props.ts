@@ -8,4 +8,5 @@ export interface MovieListProps {
     total_results: number;
   };
   numberOfMovies: number;
+  excludeFirst: boolean;
 }
