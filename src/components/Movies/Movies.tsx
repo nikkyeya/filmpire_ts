@@ -19,7 +19,7 @@ const Movies = () => {
   const classes = useStyles();
   const [page, setPage] = useState(1);
   const isLarge = useMediaQuery((theme: Theme) => theme.breakpoints.only('lg'));
-  const numberOfMovies = isLarge ? 16 : 18;
+  const numberOfMovies = isLarge ? 17 : 19;
   const { genreIdOrCategoryName, searchQuery } = useSelector(
     (state: RootState) => state.currentGenreOrCategory
   );
