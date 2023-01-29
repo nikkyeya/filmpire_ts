@@ -1,13 +1,14 @@
-import React from 'react';
 import { Box, Typography, Card, CardContent, CardMedia } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import { FeaturedItemProps, FeaturedMovieProps } from './FeaturedMovie.props';
+import { FeaturedMovieProps } from './FeaturedMovie.props';
 
 import useStyles from './FeaturedMovie.styles';
 
 const FeaturedMovie = ({ movie }: FeaturedMovieProps) => {
   const classes = useStyles();
+
+  if (!movie) return null;
 
   return (
     <Box

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -7,7 +7,6 @@ import {
   Grid,
   CircularProgress,
   Rating,
-  useMediaQuery,
   Typography,
 } from '@mui/material';
 import {
@@ -45,7 +44,6 @@ const MovieInformation = () => {
   const classes = useStyles();
   const { id }: ParamsProps = useParams();
   const dispatch = useDispatch();
-  const history = useHistory();
   const { user } = useSelector(userSelector);
   const [open, setOpen] = useState(false);
   const [isMovieFavorited, setIsMovieFavorited] = useState(false);
@@ -82,7 +80,6 @@ const MovieInformation = () => {
       )
     );
   }, [watchlistMovies, movie]);
-
 
   const addToFavorites = async () => {
     await axios.post(
@@ -299,7 +296,7 @@ const MovieInformation = () => {
           You might also like
         </Typography>
         {recommendations ? (
-          <MovieList movies={recommendations} numberOfMovies={12} />
+          <MovieList movies={recommendations} numberOfMovies={12} excludeFirst={false} />
         ) : (
           <Box>Sorry nothing was found</Box>
         )}

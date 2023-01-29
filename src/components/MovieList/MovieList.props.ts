@@ -1,5 +1,4 @@
 import { MovieItemProps } from '../Movie/Movie.props';
-
 export interface MovieListProps {
   movies: {
     page: number;

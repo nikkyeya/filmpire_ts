@@ -1,4 +1,3 @@
-import React from 'react';
 import { Grid, Typography, Grow, Tooltip, Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 

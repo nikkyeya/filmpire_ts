@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import alanBtn from '@alan-ai/alan-sdk-web';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -52,7 +52,6 @@ const useAlan = () => {
       },
     });
   }, []);
-  return <div>Alan</div>;
 };
 
 export default useAlan;
